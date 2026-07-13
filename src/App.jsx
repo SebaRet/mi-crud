@@ -55,39 +55,42 @@ function App() {
 
   return (
     <div className="App">
-      <h1>CRUD con LocalStorage</h1>
-      
-      <p className="counter">Total: {items.length}</p>
+      {/* Envolvemos todo en crud-card para que tome la forma de tarjeta y se alinee verticalmente */}
+      <div className="crud-card">
+        <h1 className="crud-title">CRUD con LocalStorage</h1>
+        
+        <p className="counter">Total: {items.length}</p>
 
-      <div style={{ marginBottom: '20px' }}>
-        <input
-          type="text"
-          className="crud-input"
-          placeholder="Buscar elementos..."
-          value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
-          style={{ width: '100%', maxWidth: '500px', boxSizing: 'border-box' }}
+        {/* Reemplazamos los estilos en línea por las clases del App.css */}
+        <div className="search-container">
+          <input
+            type="text"
+            className="crud-input search-input"
+            placeholder="Buscar elementos..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
+        
+        <Form addOrUpdateItem={addOrUpdateItem} itemToEdit={itemToEdit} />
+        
+        {/* Usamos btn-clear-all en lugar de los estilos directos */}
+        {items.length > 0 && (
+          <button 
+            onClick={clearAll} 
+            className="btn btn-delete btn-clear-all"
+          >
+            Borrar todos los elementos
+          </button>
+        )}
+
+        <List 
+          items={filteredItems} 
+          deleteItem={deleteItem} 
+          editItem={editItem} 
+          toggleComplete={toggleComplete} 
         />
       </div>
-      
-      <Form addOrUpdateItem={addOrUpdateItem} itemToEdit={itemToEdit} />
-      
-      {items.length > 0 && (
-        <button 
-          onClick={clearAll} 
-          className="btn btn-delete" 
-          style={{ marginBottom: '20px', width: '100%', maxWidth: '500px' }}
-        >
-          Borrar todos los elementos
-        </button>
-      )}
-
-      <List 
-        items={filteredItems} 
-        deleteItem={deleteItem} 
-        editItem={editItem} 
-        toggleComplete={toggleComplete} 
-      />
     </div>
   );
 }
